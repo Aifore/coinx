@@ -1,0 +1,12 @@
+[project]
+name = "coinx"
+version = "0.1.0"
+description = "币圈与 A 股个人研究报告及脚本"
+readme = "README.md"
+license = "MIT"
+requires-python = ">=3.11"
+dependencies = [
+    "matplotlib>=3.8",
+    "numpy>=1.26",
+    "plotly>=5.20",
+]
