@@ -1,0 +1,70 @@
+{
+ "version": "v1",
+ "frozenAtUtc": "2026-10-09 07:30",
+ "dataThrough": "2026-10-08",
+ "common": {
+  "upper": "60 complete days through 2026-10-08, highest close",
+  "lower": "lowest intraday low from 2026-09-21 (BTC peak day) through 2026-10-08",
+  "ratio": "synthetic close ratio COINUSDT close / BTCUSDT close; no direct COIN/BTC pair",
+  "breakout": "daily close > upper AND ratio close >= ratioMax60 AND volume ratio >= 1.5 (prev 20 days, excl signal day)",
+  "pullback": "starts at first daily close below previous close after breakout; must keep intraday low >= upper*0.97 and close >= upper, else breakout void and state returns to waiting-breakout",
+  "trigger": "after pullback starts, first daily close > previous day high",
+  "invalidation": "before trigger: close < lower OR ratio close < ratioMinSince0921 OR no breakout by 2026-11-07 close OR no trigger within 15 complete days after breakout",
+  "execution": "simulated entry at next 00:00 UTC open after trigger close",
+  "stop": "pullback lowest low * 0.99; intraday touch triggers; simulated fill at stop * 0.995",
+  "maxRiskDistancePct": 12,
+  "exit": "stop or close of 30th complete daily candle after entry; no take-profit",
+  "riskPerTradePctEquity": 0.5,
+  "portfolioRiskCapPctEquity": 2,
+  "singleCoinPositionCapPctEquity": 10,
+  "roundTripCostPct": 0.3,
+  "maxOrderVsDepth1pct": 0.1
+ },
+ "coins": {
+  "TIA": {
+   "upper": 0.5207,
+   "upperDay": "2026-09-22",
+   "lower": 0.4156,
+   "lowerDay": "2026-09-21",
+   "ratioMax60": 6.13177631309366e-06,
+   "ratioMaxDay": "2026-10-08",
+   "ratioMinSince0921": 5.048300513489329e-06,
+   "ratioMinDay": "2026-10-01",
+   "trackingStartOpen1009": 0.5012
+  },
+  "JUP": {
+   "upper": 0.372,
+   "upperDay": "2026-09-27",
+   "lower": 0.2754,
+   "lowerDay": "2026-09-23",
+   "ratioMax60": 4.403826119897717e-06,
+   "ratioMaxDay": "2026-09-27",
+   "ratioMinSince0921": 3.4408561380892344e-06,
+   "ratioMinDay": "2026-09-23",
+   "trackingStartOpen1009": 0.3361
+  },
+  "JST": {
+   "upper": 0.14189,
+   "upperDay": "2026-10-07",
+   "lower": 0.10969,
+   "lowerDay": "2026-09-24",
+   "ratioMax60": 1.7217806041335452e-06,
+   "ratioMaxDay": "2026-08-16",
+   "ratioMinSince0921": 1.3060187990612534e-06,
+   "ratioMinDay": "2026-09-22",
+   "trackingStartOpen1009": 0.13994
+  },
+  "PLUME": {
+   "upper": 0.0197,
+   "upperDay": "2026-10-05",
+   "lower": 0.01383,
+   "lowerDay": "2026-09-21",
+   "ratioMax60": 2.296924208613419e-07,
+   "ratioMaxDay": "2026-10-05",
+   "ratioMinSince0921": 1.7444008312168092e-07,
+   "ratioMinDay": "2026-09-21",
+   "trackingStartOpen1009": 0.01795
+  }
+ },
+ "btcTrackingStartOpen1009": 81754.46
+}

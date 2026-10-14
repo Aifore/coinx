@@ -1,0 +1,38 @@
+{
+  "collectedDateLocal": "2026-10-09",
+  "localTimezone": "Asia/Singapore",
+  "candleTimezone": "UTC",
+  "source": "Binance Spot REST API /api/v3/klines via binance-cli",
+  "interval": "1d",
+  "rawStart": "2025-12-01",
+  "rawEndInclusive": "2026-10-08",
+  "analysisStart": "2026-01-01",
+  "analysisEndInclusive": "2026-10-08",
+  "rawDays": 312,
+  "analysisDays": 281,
+  "excluded": "2026-10-09 open candle",
+  "volumeRatioDefinition": "signal base-asset volume divided by mean base-asset volume of previous 20 complete days, excluding signal day",
+  "returnDefinition": "end close / start close - 1; a calendar month uses previous month-end close as start",
+  "files": [
+    {
+      "symbol": "NEARUSDT",
+      "file": "NEARUSDT-1d.json",
+      "url": "https://api.binance.com/api/v3/klines?symbol=NEARUSDT&interval=1d&startTime=1764547200000&endTime=1791503999999&limit=1000"
+    },
+    {
+      "symbol": "BTCUSDT",
+      "file": "BTCUSDT-1d.json",
+      "url": "https://api.binance.com/api/v3/klines?symbol=BTCUSDT&interval=1d&startTime=1764547200000&endTime=1791503999999&limit=1000"
+    },
+    {
+      "symbol": "NEARBTC",
+      "file": "NEARBTC-1d.json",
+      "url": "https://api.binance.com/api/v3/klines?symbol=NEARBTC&interval=1d&startTime=1764547200000&endTime=1791503999999&limit=1000"
+    }
+  ],
+  "caveats": [
+    "A snapshot and case study, not an out-of-sample trading strategy test.",
+    "Daily OHLC does not establish intraday ordering of entry, stop and target.",
+    "NEARBTC direct market closes may differ slightly from NEARUSDT/BTCUSDT synthetic ratios."
+  ]
+}

@@ -1,0 +1,50 @@
+[
+  {
+    "symbol": "BTCUSDT",
+    "month": "2023-01",
+    "matched": 93,
+    "url": "https://data.binance.vision/data/futures/um/monthly/fundingRate/BTCUSDT/BTCUSDT-fundingRate-2023-01.zip"
+  },
+  {
+    "symbol": "BTCUSDT",
+    "month": "2024-03",
+    "matched": 93,
+    "url": "https://data.binance.vision/data/futures/um/monthly/fundingRate/BTCUSDT/BTCUSDT-fundingRate-2024-03.zip"
+  },
+  {
+    "symbol": "BTCUSDT",
+    "month": "2025-01",
+    "matched": 93,
+    "url": "https://data.binance.vision/data/futures/um/monthly/fundingRate/BTCUSDT/BTCUSDT-fundingRate-2025-01.zip"
+  },
+  {
+    "symbol": "BTCUSDT",
+    "month": "2025-12",
+    "matched": 93,
+    "url": "https://data.binance.vision/data/futures/um/monthly/fundingRate/BTCUSDT/BTCUSDT-fundingRate-2025-12.zip"
+  },
+  {
+    "symbol": "ETHUSDT",
+    "month": "2023-01",
+    "matched": 93,
+    "url": "https://data.binance.vision/data/futures/um/monthly/fundingRate/ETHUSDT/ETHUSDT-fundingRate-2023-01.zip"
+  },
+  {
+    "symbol": "ETHUSDT",
+    "month": "2024-03",
+    "matched": 93,
+    "url": "https://data.binance.vision/data/futures/um/monthly/fundingRate/ETHUSDT/ETHUSDT-fundingRate-2024-03.zip"
+  },
+  {
+    "symbol": "ETHUSDT",
+    "month": "2025-01",
+    "matched": 93,
+    "url": "https://data.binance.vision/data/futures/um/monthly/fundingRate/ETHUSDT/ETHUSDT-fundingRate-2025-01.zip"
+  },
+  {
+    "symbol": "ETHUSDT",
+    "month": "2025-12",
+    "matched": 93,
+    "url": "https://data.binance.vision/data/futures/um/monthly/fundingRate/ETHUSDT/ETHUSDT-fundingRate-2025-12.zip"
+  }
+]

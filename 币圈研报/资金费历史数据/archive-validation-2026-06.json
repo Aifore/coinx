@@ -1,0 +1,12 @@
+[
+  {
+    "symbol": "BTCUSDT",
+    "matched": 90,
+    "url": "https://data.binance.vision/data/futures/um/monthly/fundingRate/BTCUSDT/BTCUSDT-fundingRate-2026-06.zip"
+  },
+  {
+    "symbol": "ETHUSDT",
+    "matched": 90,
+    "url": "https://data.binance.vision/data/futures/um/monthly/fundingRate/ETHUSDT/ETHUSDT-fundingRate-2026-06.zip"
+  }
+]

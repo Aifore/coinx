@@ -1,0 +1,196 @@
+{
+  "yearToDateLows": {
+    "NEARUSDT": {
+      "intraday": {
+        "date": "2026-02-06",
+        "value": 0.841
+      },
+      "close": {
+        "date": "2026-02-11",
+        "value": 0.962
+      }
+    },
+    "BTCUSDT": {
+      "intraday": {
+        "date": "2026-07-01",
+        "value": 57800.19
+      },
+      "close": {
+        "date": "2026-06-30",
+        "value": 58624.71
+      }
+    },
+    "NEARBTC": {
+      "intraday": {
+        "date": "2026-02-12",
+        "value": 0.000014
+      },
+      "close": {
+        "date": "2026-02-11",
+        "value": 0.00001435
+      }
+    }
+  },
+  "intervals": [
+    {
+      "start": "2026-02-11",
+      "end": "2026-04-30",
+      "returnsPercent": {
+        "NEARUSDT": 34.82328482328483,
+        "BTCUSDT": 13.809931409851629,
+        "NEARBTC": 18.32752613240418
+      }
+    },
+    {
+      "start": "2026-04-30",
+      "end": "2026-05-31",
+      "returnsPercent": {
+        "NEARUSDT": 78.87432536622975,
+        "BTCUSDT": -3.500065556317733,
+        "NEARBTC": 85.68904593639574
+      }
+    },
+    {
+      "start": "2026-05-31",
+      "end": "2026-06-30",
+      "returnsPercent": {
+        "NEARUSDT": -23.18965517241378,
+        "BTCUSDT": -20.42728823407971,
+        "NEARBTC": -3.615604186489052
+      }
+    },
+    {
+      "start": "2026-06-30",
+      "end": "2026-08-31",
+      "returnsPercent": {
+        "NEARUSDT": 7.8563411896745095,
+        "BTCUSDT": 34.041243018515566,
+        "NEARBTC": -19.74333662388944
+      }
+    },
+    {
+      "start": "2026-08-31",
+      "end": "2026-09-30",
+      "returnsPercent": {
+        "NEARUSDT": 177.88761706555673,
+        "BTCUSDT": 6.416680102859096,
+        "NEARBTC": 161.9516195161952
+      }
+    },
+    {
+      "start": "2026-09-30",
+      "end": "2026-10-08",
+      "returnsPercent": {
+        "NEARUSDT": -16.420146040067397,
+        "BTCUSDT": -2.235194370967053,
+        "NEARBTC": -14.431053372984826
+      }
+    }
+  ],
+  "signals": [
+    {
+      "date": "2026-05-08",
+      "open": 1.47,
+      "high": 1.603,
+      "low": 1.455,
+      "close": 1.598,
+      "volume": 26334830.6,
+      "previous20DayAverageVolume": 10176295.059999999,
+      "volumeRatio": 2.5878603602517796,
+      "previousDayHigh": 1.529,
+      "nextDayOpen": 1.598,
+      "previous60DayHighestClose": 1.49
+    },
+    {
+      "date": "2026-05-17",
+      "open": 1.497,
+      "high": 1.56,
+      "low": 1.469,
+      "close": 1.508,
+      "volume": 8885842.7,
+      "previous20DayAverageVolume": 13859921.5,
+      "volumeRatio": 0.6411178230699214,
+      "previousDayHigh": 1.555,
+      "nextDayOpen": 1.508,
+      "previous60DayHighestClose": 1.609
+    },
+    {
+      "date": "2026-05-18",
+      "open": 1.508,
+      "high": 1.629,
+      "low": 1.478,
+      "close": 1.626,
+      "volume": 16495367.4,
+      "previous20DayAverageVolume": 13863168.145000001,
+      "volumeRatio": 1.1898699653260245,
+      "previousDayHigh": 1.56,
+      "nextDayOpen": 1.626,
+      "previous60DayHighestClose": 1.609
+    },
+    {
+      "date": "2026-06-03",
+      "open": 2.629,
+      "high": 3.087,
+      "low": 2.628,
+      "close": 2.817,
+      "volume": 79228044,
+      "previous20DayAverageVolume": 40266876.56,
+      "volumeRatio": 1.9675736180318226,
+      "previousDayHigh": 2.775,
+      "nextDayOpen": 2.817,
+      "previous60DayHighestClose": 2.772
+    },
+    {
+      "date": "2026-09-04",
+      "open": 1.955,
+      "high": 2.197,
+      "low": 1.907,
+      "close": 2.172,
+      "volume": 34881654.1,
+      "previous20DayAverageVolume": 17409036.455000006,
+      "volumeRatio": 2.003652194661338,
+      "previousDayHigh": 2.02,
+      "nextDayOpen": 2.173,
+      "previous60DayHighestClose": 2.067
+    },
+    {
+      "date": "2026-09-14",
+      "open": 2.298,
+      "high": 2.597,
+      "low": 2.28,
+      "close": 2.469,
+      "volume": 19110463.5,
+      "previous20DayAverageVolume": 21657395.985,
+      "volumeRatio": 0.8823989510666926,
+      "previousDayHigh": 2.381,
+      "nextDayOpen": 2.469,
+      "previous60DayHighestClose": 2.485
+    },
+    {
+      "date": "2026-09-16",
+      "open": 2.337,
+      "high": 2.635,
+      "low": 2.297,
+      "close": 2.621,
+      "volume": 34683070.3,
+      "previous20DayAverageVolume": 21836472.810000002,
+      "volumeRatio": 1.5883091835288023,
+      "previousDayHigh": 2.487,
+      "nextDayOpen": 2.621,
+      "previous60DayHighestClose": 2.485
+    }
+  ],
+  "riskExample": {
+    "entry": 1.626,
+    "stop": 1.45,
+    "perUnitRisk": 0.17599999999999993,
+    "stopDistancePercent": 10.824108241082406,
+    "accountRiskPercent": 0.5,
+    "positionPercent": 4.619318181818183
+  },
+  "drawdowns": {
+    "may8CloseToMay17Low": -8.072590738423024,
+    "june3CloseToJune7Low": -35.64075257365993,
+    "june3HighToAugust11Low": -50.17816650469712
+  }
+}

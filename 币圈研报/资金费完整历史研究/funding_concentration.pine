@@ -1,0 +1,106 @@
+//@version=6
+indicator("资金费方向集中度 · 已确认采样", overlay = false, precision = 5)
+
+string sourceMode = input.string("TradingView 资金费", "数据来源", options = ["TradingView 资金费", "外部指标输出"])
+string contractSymbol = input.symbol("BINANCE:BTCUSDT.P", "永续合约")
+string sampleTimeframe = input.timeframe("480", "采样周期（应匹配结算周期）")
+int windowSamples = input.int(21, "回看有效样本数（8 小时 × 21 = 7 天）", minval = 2, maxval = 1000)
+float externalSource = input.source(close, "外部资金费输出")
+bool externalReady = input.bool(false, "已选择真实资金费输出并核对单位")
+string externalUnit = input.string("百分数：0.01 表示 0.01%", "外部输出单位", options = ["百分数：0.01 表示 0.01%", "小数：0.0001 表示 0.01%"])
+
+bool useNative = sourceMode == "TradingView 资金费"
+int chartSeconds = timeframe.in_seconds()
+int sampleSeconds = timeframe.in_seconds(sampleTimeframe)
+bool dailyChart = timeframe.isdaily and timeframe.multiplier == 1
+bool aggregateDaily = useNative and dailyChart
+if barstate.isfirst
+    if not chart.is_standard or not (timeframe.isintraday or dailyChart)
+        runtime.error("请使用普通日内 K 线或 1D 日线图。")
+    if dailyChart and not useNative
+        runtime.error("1D 请使用 TradingView 资金费模式，以保留全部日内样本。")
+    if aggregateDaily
+        if sampleSeconds >= chartSeconds or chartSeconds % sampleSeconds != 0
+            runtime.error("1D 的采样周期须小于一天且能整除一天；8 小时结算请保留 480。")
+    else if chartSeconds > sampleSeconds or sampleSeconds % chartSeconds != 0
+        runtime.error("日内图表周期必须小于或等于采样周期，且能整除采样周期。")
+    if not useNative and chartSeconds != sampleSeconds
+        runtime.error("外部模式请把图表周期设置为采样周期，避免重复计数。")
+
+array<float> incomingRates = array.new_float()
+array<int> incomingTimes = array.new_int()
+if useNative
+    string fundingSymbol = ticker.standard(contractSymbol) + "_FR"
+    if aggregateDaily
+        [dailyRates, dailyTimes] = request.security_lower_tf(fundingSymbol, sampleTimeframe, [close * 100, time], ignore_invalid_symbol = true)
+        // 收盘后整批提交，避免把一天误算成一个样本或使用未完成日线。
+        if barstate.isconfirmed and not na(dailyRates) and not na(dailyTimes)
+            incomingRates := dailyRates
+            incomingTimes := dailyTimes
+    else
+        // 官方 Request/3 使用该后缀与换算；偏移一根只读取已确认值。
+        [confirmedRate, confirmedTime] = request.security(fundingSymbol, sampleTimeframe, [close[1], time[1]], gaps = barmerge.gaps_off, lookahead = barmerge.lookahead_on, ignore_invalid_symbol = true)
+        incomingRates.push(confirmedRate * 100)
+        incomingTimes.push(confirmedTime)
+else if externalReady
+    incomingRates.push(externalSource[1] * (externalUnit == "小数：0.0001 表示 0.01%" ? 100 : 1))
+    incomingTimes.push(time[1])
+
+var array<int> sampleSigns = array.new_int()
+var int lastTimestamp = na
+var int positiveCount = 0
+var int negativeCount = 0
+float samplePercent = na
+float positiveTotal = 0
+float negativeTotal = 0
+int addedSamples = 0
+for [sampleIndex, rate] in incomingRates
+    int sampleTimestamp = incomingTimes.get(sampleIndex)
+    if not na(rate) and not na(sampleTimestamp) and (na(lastTimestamp) or sampleTimestamp > lastTimestamp)
+        int sampleSign = rate > 0 ? 1 : rate < 0 ? -1 : 0
+        sampleSigns.push(sampleSign)
+        positiveCount += sampleSign == 1 ? 1 : 0
+        negativeCount += sampleSign == -1 ? 1 : 0
+        if sampleSigns.size() > windowSamples
+            int expiredSign = sampleSigns.shift()
+            positiveCount -= expiredSign == 1 ? 1 : 0
+            negativeCount -= expiredSign == -1 ? 1 : 0
+        lastTimestamp := sampleTimestamp
+
+        samplePercent := rate
+        positiveTotal += math.max(rate, 0)
+        negativeTotal += math.min(rate, 0)
+        addedSamples += 1
+
+bool newSample = addedSamples > 0
+int sampleCount = sampleSigns.size()
+float positiveShare = sampleCount > 0 ? positiveCount / float(sampleCount) : na
+float negativeShare = sampleCount > 0 ? negativeCount / float(sampleCount) : na
+float sameDirectionShare = samplePercent > 0 ? positiveShare : samplePercent < 0 ? negativeShare : 0
+bool fullWindow = sampleCount == windowSamples
+color positiveColor = color.from_gradient(positiveShare, 0, 1, color.rgb(255, 205, 210), color.rgb(150, 0, 25))
+color negativeColor = color.from_gradient(negativeShare, 0, 1, color.rgb(187, 222, 251), color.rgb(0, 55, 150))
+positiveColor := fullWindow ? positiveColor : color.new(positiveColor, 60)
+negativeColor := fullWindow ? negativeColor : color.new(negativeColor, 60)
+color barColor = samplePercent > 0 ? positiveColor : samplePercent < 0 ? negativeColor : color.gray
+
+hline(0, "零费率", color.gray)
+plot(not aggregateDaily and newSample ? samplePercent : na, "资金费率（% / 数据源原始结算周期）", color = barColor, style = plot.style_columns)
+plot(aggregateDaily and newSample ? positiveTotal : na, "1D 正费率合计（%）", color = positiveColor, style = plot.style_columns)
+plot(aggregateDaily and newSample ? negativeTotal : na, "1D 负费率合计（%）", color = negativeColor, style = plot.style_columns)
+plot(not aggregateDaily and newSample ? sameDirectionShare * 100 : na, "窗口同号比例（%）", display = display.data_window)
+plot(aggregateDaily and newSample ? positiveShare * 100 : na, "窗口正费率比例（%）", display = display.data_window)
+plot(aggregateDaily and newSample ? negativeShare * 100 : na, "窗口负费率比例（%）", display = display.data_window)
+plot(aggregateDaily and newSample ? positiveTotal + negativeTotal : na, "1D 净费率合计（%）", display = display.data_window)
+plot(aggregateDaily and barstate.isconfirmed ? addedSamples : na, "1D 有效样本数", display = display.data_window)
+plot(sampleCount, "有效样本数", display = display.data_window)
+
+var table status = table.new(position.top_right, 1, 1)
+if barstate.islast
+    string statusText = sampleCount == 0 ? (useNative ? "暂无资金费数据：检查合约或数据权限" : "请连接资金费输出并勾选确认") : "已确认采样 " + str.tostring(sampleCount) + "/" + str.tostring(windowSamples) + (fullWindow ? "" : " · 窗口未满")
+    if aggregateDaily
+        statusText += barstate.isconfirmed ? " · 当日样本 " + str.tostring(addedSamples) + "/" + str.tostring(int(chartSeconds / sampleSeconds)) : " · 等待日线收盘"
+    table.cell(status, 0, 0, statusText, text_color = chart.fg_color, bgcolor = color.new(chart.bg_color, 15))
+
+if sampleCount > windowSamples or positiveCount < 0 or negativeCount < 0 or positiveCount + negativeCount > sampleCount or (sampleCount > 0 and sampleSigns.sum() != positiveCount - negativeCount)
+    runtime.error("窗口计数不一致。")

@@ -1,0 +1,20 @@
+{
+ "collectedAtUtc": "2026-10-09 07:12-07:21",
+ "source": "Binance Spot REST API /api/v3 (exchangeInfo, ticker/24hr, klines, bookTicker, depth)",
+ "interval": "1d",
+ "candleTimezone": "UTC",
+ "rawStart": "2025-12-01",
+ "rawEndInclusive": "2026-10-08",
+ "excluded": "2026-10-09 open candle",
+ "universe": "TRADING spot pairs quoted in USDT, ASCII symbols, excluding stablecoins/wrapped assets, 24h quote volume >= 5,000,000 USDT at collection time",
+ "universeCount": 99,
+ "analysedWithHistoryBefore2026": 81,
+ "insufficientHistory": 17,
+ "layer1": "low during 2026-06-05..07-05 (BTC breakdown) above own Jan-Feb low",
+ "layer2": "synthetic COIN/BTC close ratio 2026-10-08 above value 60 days earlier",
+ "caveats": [
+  "Universe selected by liquidity on collection day: survivorship bias.",
+  "Thresholds (5M volume, 60/20-day windows) are ad hoc and unvalidated.",
+  "Order book figures are a single snapshot at 2026-10-09 07:21 UTC."
+ ]
+}

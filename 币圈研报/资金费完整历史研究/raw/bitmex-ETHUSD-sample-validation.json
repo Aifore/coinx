@@ -1,0 +1,94 @@
+[
+  {
+    "query": "https://www.bitmex.com/api/v1/funding?symbol=ETHUSD&startTime=2018-08-02&count=3&reverse=false",
+    "checks": [
+      {
+        "t": "2018-08-02T12:00:00.000Z",
+        "API_fundingRate": 0.0001,
+        "stored_r": 0.0001,
+        "fundingRateDaily": 0.00030000000000000003
+      },
+      {
+        "t": "2018-08-02T20:00:00.000Z",
+        "API_fundingRate": 0.00044,
+        "stored_r": 0.00044,
+        "fundingRateDaily": 0.00132
+      },
+      {
+        "t": "2018-08-03T04:00:00.000Z",
+        "API_fundingRate": 0.00041,
+        "stored_r": 0.00041,
+        "fundingRateDaily": 0.00123
+      }
+    ]
+  },
+  {
+    "query": "https://www.bitmex.com/api/v1/funding?symbol=ETHUSD&startTime=2020-03-12&count=3&reverse=false",
+    "checks": [
+      {
+        "t": "2020-03-12T04:00:00.000Z",
+        "API_fundingRate": 0.000413,
+        "stored_r": 0.000413,
+        "fundingRateDaily": 0.001239
+      },
+      {
+        "t": "2020-03-12T12:00:00.000Z",
+        "API_fundingRate": 0.000756,
+        "stored_r": 0.000756,
+        "fundingRateDaily": 0.002268
+      },
+      {
+        "t": "2020-03-12T20:00:00.000Z",
+        "API_fundingRate": 0.000235,
+        "stored_r": 0.000235,
+        "fundingRateDaily": 0.000705
+      }
+    ]
+  },
+  {
+    "query": "https://www.bitmex.com/api/v1/funding?symbol=ETHUSD&startTime=2022-06-18&count=3&reverse=false",
+    "checks": [
+      {
+        "t": "2022-06-18T04:00:00.000Z",
+        "API_fundingRate": 0.000924,
+        "stored_r": 0.000924,
+        "fundingRateDaily": 0.002772
+      },
+      {
+        "t": "2022-06-18T12:00:00.000Z",
+        "API_fundingRate": 0.001443,
+        "stored_r": 0.001443,
+        "fundingRateDaily": 0.004329
+      },
+      {
+        "t": "2022-06-18T20:00:00.000Z",
+        "API_fundingRate": 0.001222,
+        "stored_r": 0.001222,
+        "fundingRateDaily": 0.003666
+      }
+    ]
+  },
+  {
+    "query": "https://www.bitmex.com/api/v1/funding?symbol=ETHUSD&startTime=2026-03-01&count=3&reverse=false",
+    "checks": [
+      {
+        "t": "2026-03-01T04:00:00.000Z",
+        "API_fundingRate": 0.0001,
+        "stored_r": 0.0001,
+        "fundingRateDaily": 0.00030000000000000003
+      },
+      {
+        "t": "2026-03-01T12:00:00.000Z",
+        "API_fundingRate": 0.000205,
+        "stored_r": 0.000205,
+        "fundingRateDaily": 0.000615
+      },
+      {
+        "t": "2026-03-01T20:00:00.000Z",
+        "API_fundingRate": 0.000347,
+        "stored_r": 0.000347,
+        "fundingRateDaily": 0.0010409999999999998
+      }
+    ]
+  }
+]

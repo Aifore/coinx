@@ -1,0 +1,150 @@
+{
+  "requested_start_utc": "2012-01-01T00:00:00+00:00",
+  "end_exclusive_utc": "2026-10-02T00:00:00+00:00",
+  "datasets": {
+    "binance-BTCUSDT-spot-daily": {
+      "file": "raw/binance-BTCUSDT-spot-daily.json",
+      "kind": "spot-daily",
+      "first_utc": "2017-08-17T00:00:00+00:00",
+      "last_utc": "2026-10-01T00:00:00+00:00",
+      "count": 3333,
+      "duplicate_timestamps_removed": 0,
+      "observed_interval_hours_counts": {
+        "24.0": 3332
+      },
+      "source_url": "https://data-api.binance.vision/api/v3/klines",
+      "retrieved_at_utc": "2026-10-02T09:49:54.508531+00:00",
+      "expected_interval_hours": 24.0,
+      "duplicate_slots": 0,
+      "missing_slots": 0,
+      "missing_slot_times_utc": []
+    },
+    "binance-ETHUSDT-funding": {
+      "file": "raw/binance-ETHUSDT-funding.json",
+      "kind": "funding",
+      "first_utc": "2019-11-27T08:00:00+00:00",
+      "last_utc": "2026-10-01T16:00:00.003000+00:00",
+      "count": 7502,
+      "duplicate_timestamps_removed": 0,
+      "observed_interval_hours_counts": {
+        "8.0": 7501
+      },
+      "source_url": "https://fapi.binance.com/fapi/v1/fundingRate",
+      "retrieved_at_utc": "2026-10-02T09:49:55.861240+00:00",
+      "expected_interval_hours": 8.0,
+      "duplicate_slots": 0,
+      "missing_slots": 0,
+      "missing_slot_times_utc": [],
+      "interval_basis": "8-hour grid verified against all observed timestamps; millisecond jitter retained",
+      "null_settlement_mark_prices": 4302
+    },
+    "binance-BTCUSDT-funding": {
+      "file": "raw/binance-BTCUSDT-funding.json",
+      "kind": "funding",
+      "first_utc": "2019-09-10T08:00:00+00:00",
+      "last_utc": "2026-10-01T16:00:00.003000+00:00",
+      "count": 7736,
+      "duplicate_timestamps_removed": 0,
+      "observed_interval_hours_counts": {
+        "8.0": 7735
+      },
+      "source_url": "https://fapi.binance.com/fapi/v1/fundingRate",
+      "retrieved_at_utc": "2026-10-02T09:49:55.864628+00:00",
+      "expected_interval_hours": 8.0,
+      "duplicate_slots": 0,
+      "missing_slots": 0,
+      "missing_slot_times_utc": [],
+      "interval_basis": "8-hour grid verified against all observed timestamps; millisecond jitter retained",
+      "null_settlement_mark_prices": 4536
+    },
+    "binance-ETHUSDT-spot-daily": {
+      "file": "raw/binance-ETHUSDT-spot-daily.json",
+      "kind": "spot-daily",
+      "first_utc": "2017-08-17T00:00:00+00:00",
+      "last_utc": "2026-10-01T00:00:00+00:00",
+      "count": 3333,
+      "duplicate_timestamps_removed": 0,
+      "observed_interval_hours_counts": {
+        "24.0": 3332
+      },
+      "source_url": "https://data-api.binance.vision/api/v3/klines",
+      "retrieved_at_utc": "2026-10-02T09:50:00.182439+00:00",
+      "expected_interval_hours": 24.0,
+      "duplicate_slots": 0,
+      "missing_slots": 0,
+      "missing_slot_times_utc": []
+    },
+    "bitmex-XBTUSD-funding": {
+      "file": "raw/bitmex-XBTUSD-funding.json",
+      "kind": "funding",
+      "first_utc": "2016-05-14T12:00:00+00:00",
+      "last_utc": "2026-09-16T12:00:00+00:00",
+      "count": 11290,
+      "duplicate_timestamps_removed": 0,
+      "observed_interval_hours_counts": {
+        "8.0": 11268,
+        "24.0": 21
+      },
+      "source_url": "https://www.bitmex.com/api/v1/funding",
+      "retrieved_at_utc": "2026-10-02T09:50:19.751589+00:00",
+      "reported_interval_hours_counts": {
+        "24.0": 22,
+        "8.0": 11268
+      },
+      "interval_basis": "Each settlement's source fundingInterval, measured from 2000-01-01T00:00:00Z",
+      "interval_transition_or_gap_count": 0,
+      "interval_transitions_or_gaps": [],
+      "null_settlement_mark_prices": 11290,
+      "unavailable_tail_slots_to_requested_end": 46,
+      "tail_note": "No records beyond last_utc were returned; do not interpret the unavailable tail as zero funding",
+      "reverse_latest_query_confirmed": true
+    },
+    "coinmetrics-BTCUSD-reference-daily": {
+      "file": "raw/coinmetrics-BTCUSD-reference-daily.json",
+      "kind": "reference-daily",
+      "first_utc": "2012-01-01T00:00:00+00:00",
+      "last_utc": "2026-10-01T00:00:00+00:00",
+      "count": 5388,
+      "duplicate_timestamps_removed": 0,
+      "observed_interval_hours_counts": {
+        "24.0": 5387
+      },
+      "source_url": "https://community-api.coinmetrics.io/v4/timeseries/asset-metrics",
+      "retrieved_at_utc": "2026-10-02T09:52:52.401482+00:00",
+      "expected_interval_hours": 24.0,
+      "duplicate_slots": 0,
+      "missing_slots": 0,
+      "missing_slot_times_utc": [],
+      "metric": "PriceUSD",
+      "price_basis": "CoinMetrics daily USD reference price; close is a schema alias, not an exchange candle close",
+      "missing_price_values": 0,
+      "available_after_ms_from_t": 86400000,
+      "timestamp_definition": "t labels the UTC day; PriceUSD is the price as of that day's end",
+      "methodology_url": "https://github.com/coinmetrics/docs-website/blob/master/asset-metrics/market/priceusd.md"
+    },
+    "bitmex-ETHUSD-funding": {
+      "file": "raw/bitmex-ETHUSD-funding.json",
+      "kind": "funding",
+      "first_utc": "2018-08-02T12:00:00+00:00",
+      "last_utc": "2026-09-16T12:00:00+00:00",
+      "count": 8902,
+      "duplicate_timestamps_removed": 0,
+      "observed_interval_hours_counts": {
+        "8.0": 8901
+      },
+      "source_url": "https://www.bitmex.com/api/v1/funding",
+      "retrieved_at_utc": "2026-10-02T10:03:15.533275+00:00",
+      "reported_interval_hours_counts": {
+        "8.0": 8902
+      },
+      "interval_basis": "Each settlement's source fundingInterval, measured from 2000-01-01T00:00:00Z",
+      "interval_transition_or_gap_count": 0,
+      "interval_transitions_or_gaps": [],
+      "null_settlement_mark_prices": 8902,
+      "unavailable_tail_slots_to_requested_end": 46,
+      "tail_note": "No records beyond last_utc were returned; do not interpret the unavailable tail as zero funding",
+      "reverse_latest_query_confirmed": true
+    }
+  },
+  "errors": {}
+}

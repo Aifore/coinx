@@ -1,0 +1,312 @@
+{
+  "BTCUSDT": {
+    "negative_total": 252,
+    "months": {
+      "2025-10": {
+        "total": 93,
+        "negative": 24,
+        "negative_rate_pct": 25.806451612903224,
+        "share_of_all_negative_pct": 9.523809523809524,
+        "negative_price_min": 105578.3,
+        "negative_price_max": 115112.0
+      },
+      "2025-11": {
+        "total": 90,
+        "negative": 11,
+        "negative_rate_pct": 12.222222222222221,
+        "share_of_all_negative_pct": 4.365079365079365,
+        "negative_price_min": 86807.6,
+        "negative_price_max": 104737.0
+      },
+      "2025-12": {
+        "total": 93,
+        "negative": 10,
+        "negative_rate_pct": 10.75268817204301,
+        "share_of_all_negative_pct": 3.968253968253968,
+        "negative_price_min": 86251.64706522,
+        "negative_price_max": 93381.85158696
+      },
+      "2026-01": {
+        "total": 93,
+        "negative": 4,
+        "negative_rate_pct": 4.301075268817205,
+        "share_of_all_negative_pct": 1.5873015873015872,
+        "negative_price_min": 91059.8,
+        "negative_price_max": 96908.0
+      },
+      "2026-02": {
+        "total": 84,
+        "negative": 45,
+        "negative_rate_pct": 53.57142857142857,
+        "share_of_all_negative_pct": 17.857142857142858,
+        "negative_price_min": 62887.1415,
+        "negative_price_max": 78800.6
+      },
+      "2026-03": {
+        "total": 93,
+        "negative": 52,
+        "negative_rate_pct": 55.91397849462365,
+        "share_of_all_negative_pct": 20.634920634920633,
+        "negative_price_min": 65749.9,
+        "negative_price_max": 74212.7
+      },
+      "2026-04": {
+        "total": 90,
+        "negative": 58,
+        "negative_rate_pct": 64.44444444444444,
+        "share_of_all_negative_pct": 23.015873015873016,
+        "negative_price_min": 66819.54021739,
+        "negative_price_max": 79234.2
+      },
+      "2026-05": {
+        "total": 93,
+        "negative": 27,
+        "negative_rate_pct": 29.03225806451613,
+        "share_of_all_negative_pct": 10.714285714285714,
+        "negative_price_min": 76305.5,
+        "negative_price_max": 81699.60136232
+      },
+      "2026-06": {
+        "total": 90,
+        "negative": 21,
+        "negative_rate_pct": 23.333333333333332,
+        "share_of_all_negative_pct": 8.333333333333332,
+        "negative_price_min": 60416.4921087,
+        "negative_price_max": 67247.20644203
+      }
+    },
+    "price_bands_lower_inclusive": {
+      "50000-60000": {
+        "total": 7,
+        "negative": 0,
+        "negative_rate_pct": 0.0,
+        "share_of_all_negative_pct": 0.0,
+        "negative_price_min": null,
+        "negative_price_max": null
+      },
+      "60000-70000": {
+        "total": 213,
+        "negative": 96,
+        "negative_rate_pct": 45.07042253521127,
+        "share_of_all_negative_pct": 38.095238095238095,
+        "negative_price_min": 60416.4921087,
+        "negative_price_max": 69906.39643478
+      },
+      "70000-80000": {
+        "total": 205,
+        "negative": 95,
+        "negative_rate_pct": 46.34146341463415,
+        "share_of_all_negative_pct": 37.698412698412696,
+        "negative_price_min": 70110.6,
+        "negative_price_max": 79981.2
+      },
+      "80000-90000": {
+        "total": 151,
+        "negative": 23,
+        "negative_rate_pct": 15.2317880794702,
+        "share_of_all_negative_pct": 9.126984126984127,
+        "negative_price_min": 80114.8,
+        "negative_price_max": 89713.4
+      },
+      "90000-100000": {
+        "total": 111,
+        "negative": 12,
+        "negative_rate_pct": 10.81081081081081,
+        "share_of_all_negative_pct": 4.761904761904762,
+        "negative_price_min": 90231.4,
+        "negative_price_max": 96908.0
+      },
+      "100000-110000": {
+        "total": 55,
+        "negative": 12,
+        "negative_rate_pct": 21.818181818181817,
+        "share_of_all_negative_pct": 4.761904761904762,
+        "negative_price_min": 102269.2,
+        "negative_price_max": 108590.7
+      },
+      "110000-120000": {
+        "total": 55,
+        "negative": 14,
+        "negative_rate_pct": 25.454545454545453,
+        "share_of_all_negative_pct": 5.555555555555555,
+        "negative_price_min": 110469.9,
+        "negative_price_max": 115112.0
+      },
+      "120000-130000": {
+        "total": 22,
+        "negative": 0,
+        "negative_rate_pct": 0.0,
+        "share_of_all_negative_pct": 0.0,
+        "negative_price_min": null,
+        "negative_price_max": null
+      }
+    },
+    "feb_apr": {
+      "total": 267,
+      "negative": 155,
+      "negative_rate_pct": 58.052434456928836,
+      "share_of_all_negative_pct": 61.50793650793651,
+      "negative_price_min": 62887.1415,
+      "negative_price_max": 79234.2
+    },
+    "most_negative": {
+      "symbol": "BTCUSDT",
+      "fundingTime": 1770422400003,
+      "fundingRate": "-0.00015178",
+      "markPrice": "70544.40000000",
+      "rateType": "Regular",
+      "time_utc": "2026-02-07T00:00:00.003000+00:00"
+    }
+  },
+  "ETHUSDT": {
+    "negative_total": 267,
+    "months": {
+      "2025-10": {
+        "total": 93,
+        "negative": 17,
+        "negative_rate_pct": 18.27956989247312,
+        "share_of_all_negative_pct": 6.367041198501873,
+        "negative_price_min": 3744.54,
+        "negative_price_max": 4424.43
+      },
+      "2025-11": {
+        "total": 90,
+        "negative": 10,
+        "negative_rate_pct": 11.11111111111111,
+        "share_of_all_negative_pct": 3.7453183520599254,
+        "negative_price_min": 2792.32,
+        "negative_price_max": 3542.83
+      },
+      "2025-12": {
+        "total": 93,
+        "negative": 13,
+        "negative_rate_pct": 13.978494623655912,
+        "share_of_all_negative_pct": 4.868913857677903,
+        "negative_price_min": 2745.14208527,
+        "negative_price_max": 3235.78
+      },
+      "2026-01": {
+        "total": 93,
+        "negative": 9,
+        "negative_rate_pct": 9.67741935483871,
+        "share_of_all_negative_pct": 3.3707865168539324,
+        "negative_price_min": 2532.73,
+        "negative_price_max": 3205.71
+      },
+      "2026-02": {
+        "total": 84,
+        "negative": 55,
+        "negative_rate_pct": 65.47619047619048,
+        "share_of_all_negative_pct": 20.59925093632959,
+        "negative_price_min": 1824.77,
+        "negative_price_max": 2450.28496124
+      },
+      "2026-03": {
+        "total": 93,
+        "negative": 52,
+        "negative_rate_pct": 55.91397849462365,
+        "share_of_all_negative_pct": 19.475655430711612,
+        "negative_price_min": 1936.1790417,
+        "negative_price_max": 2314.99991473
+      },
+      "2026-04": {
+        "total": 90,
+        "negative": 52,
+        "negative_rate_pct": 57.77777777777777,
+        "share_of_all_negative_pct": 19.475655430711612,
+        "negative_price_min": 2050.31030233,
+        "negative_price_max": 2418.04379845
+      },
+      "2026-05": {
+        "total": 93,
+        "negative": 21,
+        "negative_rate_pct": 22.58064516129032,
+        "share_of_all_negative_pct": 7.865168539325842,
+        "negative_price_min": 2256.49,
+        "negative_price_max": 2379.74
+      },
+      "2026-06": {
+        "total": 90,
+        "negative": 38,
+        "negative_rate_pct": 42.22222222222222,
+        "share_of_all_negative_pct": 14.232209737827715,
+        "negative_price_min": 1559.71,
+        "negative_price_max": 1773.26823256
+      }
+    },
+    "price_bands_lower_inclusive": {
+      "1500-2000": {
+        "total": 155,
+        "negative": 87,
+        "negative_rate_pct": 56.12903225806451,
+        "share_of_all_negative_pct": 32.58426966292135,
+        "negative_price_min": 1559.71,
+        "negative_price_max": 1995.33233761
+      },
+      "2000-2500": {
+        "total": 295,
+        "negative": 131,
+        "negative_rate_pct": 44.40677966101695,
+        "share_of_all_negative_pct": 49.063670411985015,
+        "negative_price_min": 2005.0,
+        "negative_price_max": 2450.28496124
+      },
+      "2500-3000": {
+        "total": 100,
+        "negative": 19,
+        "negative_rate_pct": 19.0,
+        "share_of_all_negative_pct": 7.116104868913857,
+        "negative_price_min": 2532.73,
+        "negative_price_max": 2988.45
+      },
+      "3000-3500": {
+        "total": 158,
+        "negative": 12,
+        "negative_rate_pct": 7.59493670886076,
+        "share_of_all_negative_pct": 4.49438202247191,
+        "negative_price_min": 3000.72510853,
+        "negative_price_max": 3426.89084496
+      },
+      "3500-4000": {
+        "total": 61,
+        "negative": 11,
+        "negative_rate_pct": 18.0327868852459,
+        "share_of_all_negative_pct": 4.119850187265917,
+        "negative_price_min": 3542.83,
+        "negative_price_max": 3983.8
+      },
+      "4000-4500": {
+        "total": 39,
+        "negative": 7,
+        "negative_rate_pct": 17.94871794871795,
+        "share_of_all_negative_pct": 2.6217228464419478,
+        "negative_price_min": 4022.83,
+        "negative_price_max": 4424.43
+      },
+      "4500-5000": {
+        "total": 11,
+        "negative": 0,
+        "negative_rate_pct": 0.0,
+        "share_of_all_negative_pct": 0.0,
+        "negative_price_min": null,
+        "negative_price_max": null
+      }
+    },
+    "feb_apr": {
+      "total": 267,
+      "negative": 159,
+      "negative_rate_pct": 59.55056179775281,
+      "share_of_all_negative_pct": 59.55056179775281,
+      "negative_price_min": 1824.77,
+      "negative_price_max": 2450.28496124
+    },
+    "most_negative": {
+      "symbol": "ETHUSDT",
+      "fundingTime": 1771833600000,
+      "fundingRate": "-0.00036526",
+      "markPrice": "1884.29258140",
+      "rateType": "Regular",
+      "time_utc": "2026-02-23T08:00:00+00:00"
+    }
+  }
+}
