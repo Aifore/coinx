@@ -13,4 +13,5 @@ binance:
 	@python3 scripts/binance/binance_report.py
 
 binance-bar:
-	@uv run scripts/binance/binance_menubar.py
+	@nohup uv run scripts/binance/binance_menubar.py < /dev/null > /tmp/binance_menubar.log 2>&1 &
+	@echo '菜单栏已在后台启动，日志：/tmp/binance_menubar.log'

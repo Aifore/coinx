@@ -15,6 +15,10 @@ from pathlib import Path
 import objc
 import rumps
 from AppKit import (
+    NSApp,
+    NSEventMaskLeftMouseUp,
+    NSEventMaskRightMouseUp,
+    NSEventModifierFlagOption,
     NSBox,
     NSBoxSeparator,
     NSColor,
@@ -35,6 +39,7 @@ from AppKit import (
     NSView,
 )
 from Foundation import (
+    NSObject,
     NSAttributedString,
     NSMakeRect,
     NSMaxX,
@@ -360,12 +365,33 @@ def failure_reason(error):
     return f"查询失败：{detail}"
 
 
+class StatusItemClickHandler(NSObject):
+    # 菜单挂在图标上时，系统会吞掉单击；摘掉菜单后由这里分流：
+    # 按住 ⌥ 切换顶栏，其余点击临时挂回菜单并展开，效果与原来的单击一致
+    def initWithApp_(self, app):
+        self = objc.super(StatusItemClickHandler, self).init()
+        self.app = app
+        return self
+
+    def statusItemClicked_(self, sender):
+        event = NSApp.currentEvent()
+        if event is not None and event.modifierFlags() & NSEventModifierFlagOption:
+            self.app.toggle_title_mode()
+            return
+        item = self.app._nsapp.nsstatusitem
+        item.setMenu_(self.app.status_menu)
+        item.button().performClick_(None)  # 菜单收起后才返回
+        item.setMenu_(None)
+
+
 class PnlApp(rumps.App):
     def __init__(self, client):
         super().__init__("币安今日盈亏", title="₿ …", quit_button=None)
         self.client = client
         self.loading = False
         self.last_report = None
+        self.click_handler = None
+        self.status_menu = None
         self.defaults = NSUserDefaults.standardUserDefaults()
         saved_minutes = self.defaults.integerForKey_(REFRESH_MINUTES_KEY)
         self.refresh_minutes = (
@@ -411,12 +437,31 @@ class PnlApp(rumps.App):
         self.title_mode = mode
         self.defaults.setObject_forKey_(mode, TITLE_MODE_KEY)
         self.update_title()
-        self.title_parent.title = f"顶栏显示：{TITLE_MODES[mode]}"
+        self.title_parent.title = f"顶栏显示：{TITLE_MODES[mode]}（⌥ 点击图标可切换）"
         for key, item in self.title_items.items():
             item.state = int(key == mode)
 
+    def toggle_title_mode(self):
+        modes = list(TITLE_MODES)
+        self.set_title_mode(modes[(modes.index(self.title_mode) + 1) % len(modes)])
+
+    def install_click_handler(self):
+        # 状态栏图标在 run() 之后才创建，只在第一次刷新结果到达时接管一次
+        if self.click_handler is not None:
+            return
+        item = self._nsapp.nsstatusitem
+        self.status_menu = item.menu()
+        self.click_handler = StatusItemClickHandler.alloc().initWithApp_(self)
+        item.setMenu_(None)
+        button = item.button()
+        button.setTarget_(self.click_handler)
+        button.setAction_("statusItemClicked:")
+        button.sendActionOn_(NSEventMaskLeftMouseUp | NSEventMaskRightMouseUp)
+
     def title_menu(self):
-        self.title_parent = rumps.MenuItem(f"顶栏显示：{TITLE_MODES[self.title_mode]}")
+        self.title_parent = rumps.MenuItem(
+            f"顶栏显示：{TITLE_MODES[self.title_mode]}（⌥ 点击图标可切换）"
+        )
         self.title_items = {}
         for mode, label in TITLE_MODES.items():
             item = rumps.MenuItem(
@@ -455,6 +500,7 @@ class PnlApp(rumps.App):
         self.loading = False
         # 有保存名系统才会记住 ⌘ 拖动后的图标位置；状态栏图标在 run() 之后才创建
         self._nsapp.nsstatusitem.setAutosaveName_("binance-pnl")
+        self.install_click_handler()
         self.menu.clear()
         if not isinstance(result, Exception):
             self.last_report = (result, datetime.now())
