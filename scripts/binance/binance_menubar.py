@@ -2,9 +2,15 @@
 # requires-python = ">=3.11"
 # dependencies = ["rumps"]
 # ///
+import fcntl
+import os
 import shutil
+import signal
+import tempfile
 import threading
+import time
 from datetime import UTC, datetime
+from pathlib import Path
 
 import objc
 import rumps
@@ -63,6 +69,8 @@ DIVIDER_SPACE = 7
 WHEEL_LINE_STEP = 12
 # 数据列可见宽度上限，超出部分左右滑动；屏幕右侧仍放不下时调小此值
 MAX_SCROLL_WIDTH = 360
+LOCK_PATH = Path(tempfile.gettempdir()) / "binance-menubar.lock"
+TAKEOVER_TIMEOUT = 5
 FONT = NSFont.monospacedDigitSystemFontOfSize_weight_(12, NSFontWeightRegular)
 BOLD_FONT = NSFont.monospacedDigitSystemFontOfSize_weight_(12, NSFontWeightSemibold)
 
@@ -491,10 +499,48 @@ class PnlApp(rumps.App):
         return items
 
 
+def try_lock(handle):
+    try:
+        fcntl.flock(handle, fcntl.LOCK_EX | fcntl.LOCK_NB)
+    except BlockingIOError:
+        return False
+    return True
+
+
+def take_over_running_instance(path=LOCK_PATH):
+    """只保留一个菜单栏实例：新进程结束持锁的旧进程后接管，重启时不必先手动关旧的。
+
+    返回的文件句柄须一直保持打开；进程退出时系统自动释放锁。
+    """
+    handle = path.open("a+")
+    if not try_lock(handle):
+        # 锁被持有说明持锁进程仍在运行，文件里的 PID 就是它自己写入的
+        handle.seek(0)
+        pid = handle.read().strip()
+        if pid.isdigit():
+            try:
+                os.kill(int(pid), signal.SIGTERM)
+            except ProcessLookupError:
+                pass
+        deadline = time.monotonic() + TAKEOVER_TIMEOUT
+        while not try_lock(handle):
+            if time.monotonic() > deadline:
+                raise SystemExit(
+                    f"旧的菜单栏进程（PID {pid}）未退出，请手动结束后重试。"
+                )
+            time.sleep(0.1)
+    handle.seek(0)
+    handle.truncate()
+    handle.write(str(os.getpid()))
+    handle.flush()
+    return handle
+
+
 def main():
     executable = shutil.which("binance-cli")
     if not executable:
         raise SystemExit("未找到 binance-cli，请先安装并激活只读 profile。")
+    lock = take_over_running_instance()  # noqa: F841  持有到进程退出
     PnlApp(Binance(executable)).run()
 
 
