@@ -15,7 +15,7 @@ from pathlib import Path
 import objc
 import rumps
 from AppKit import (
-    NSApp,
+    NSEvent,
     NSEventMaskLeftMouseUp,
     NSEventMaskRightMouseUp,
     NSEventModifierFlagOption,
@@ -374,8 +374,9 @@ class StatusItemClickHandler(NSObject):
         return self
 
     def statusItemClicked_(self, sender):
-        event = NSApp.currentEvent()
-        if event is not None and event.modifierFlags() & NSEventModifierFlagOption:
+        # 图标由系统场景托管，转交来的鼠标事件不带修饰键（实测 ⌥ 按住时仍为 0），
+        # 所以直接读键盘当前状态
+        if NSEvent.modifierFlags() & NSEventModifierFlagOption:
             self.app.toggle_title_mode()
             return
         item = self.app._nsapp.nsstatusitem
