@@ -595,6 +595,11 @@ def funding_fee(data, market, key):
     )
 
 
+def core_data_missing(data):
+    # 现货、U 本位持仓和账户都没取到，说明是整体断网或鉴权失效，而非个别接口缺口
+    return all(data[key] is None for key in ("spot", "positions", "usds"))
+
+
 def daily_breakdown(data, market):
     def named(rows, name, failed):
         # 查询失败用一行 None 占位，让合计自动变为未取得，而不是被当成 0

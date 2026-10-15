@@ -7,6 +7,7 @@ from binance_report import (
     Binance,
     account_values,
     contract_summary,
+    core_data_missing,
     daily_breakdown,
     overview,
     number,
@@ -344,6 +345,14 @@ class ReportTest(unittest.TestCase):
         rows, summary = overview(data, market)
         self.assertIsNone(summary["value"])
         self.assertIn("U 本位账户权益未取得", [row["name"] for row in rows])
+
+    def test_core_data_missing_only_when_all_core_endpoints_failed(self):
+        self.assertTrue(
+            core_data_missing(dict(spot=None, positions=None, usds=None, coin=1))
+        )
+        self.assertFalse(
+            core_data_missing(dict(spot=None, positions=[], usds=None, coin=None))
+        )
 
     def test_contract_summary_roi_uses_total_margin(self):
         rows = [
