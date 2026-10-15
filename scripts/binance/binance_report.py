@@ -270,7 +270,8 @@ def collect(client, now, warnings):
         )
     data = parallel(jobs, warnings)
 
-    assets = {"USDT"}
+    # 不持有 BTC 也取行情，供菜单栏顶部切换显示 BTC 价格
+    assets = {"USDT", "BTC"}
     for rows in (
         (data.get("spot") or {}).get("balances", []),
         [

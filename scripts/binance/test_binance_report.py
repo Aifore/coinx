@@ -6,6 +6,7 @@ from unittest.mock import patch
 from binance_report import (
     Binance,
     account_values,
+    collect,
     contract_summary,
     daily_breakdown,
     overview,
@@ -345,6 +346,25 @@ class ReportTest(unittest.TestCase):
         rows, summary = overview(data, market)
         self.assertIsNone(summary["value"])
         self.assertIn("U 本位账户权益未取得", [row["name"] for row in rows])
+
+    def test_collect_fetches_btc_ticker_without_holding(self):
+        now = datetime(2026, 1, 2, 3, tzinfo=UTC)
+        day = int(utc_start(now).timestamp() * 1000)
+        client = Binance("binance-cli")
+        ticker = {"lastPrice": "100000", "openPrice": "98000", "openTime": day}
+
+        def fake_call(group, command, **_):
+            return ticker if command == "ticker-trading-day" else {}
+
+        with (
+            patch.object(client, "call", side_effect=fake_call) as call,
+            patch.object(client, "paged", return_value=[]),
+        ):
+            _, market = collect(client, now, [])
+        self.assertEqual(market["BTC"], ticker)
+        call.assert_any_call(
+            "spot", "ticker-trading-day", symbol="BTCUSDT", time_zone="0:00"
+        )
 
     def test_contract_summary_roi_uses_total_margin(self):
         rows = [

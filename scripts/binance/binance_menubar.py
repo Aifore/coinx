@@ -45,6 +45,7 @@ from binance_report import (
     daily_breakdown,
     overview,
     fmt,
+    spot_row,
     spot_summary,
     total,
 )
@@ -52,6 +53,8 @@ from binance_report import (
 REFRESH_MINUTES_OPTIONS = (1, 2, 5, 15, 30, 60)
 DEFAULT_REFRESH_MINUTES = 5
 REFRESH_MINUTES_KEY = "binancePnlRefreshMinutes"
+TITLE_MODES = dict(pnl="今日盈亏", btc="BTC 价格")
+TITLE_MODE_KEY = "binancePnlTitleMode"
 COLUMN_GAP = 12
 ROW_INSET = 12
 ROW_PADDING = 4
@@ -336,6 +339,12 @@ def headline(*summaries):
     return f"₿ {fmt(known, signed=True)}{suffix}"
 
 
+def btc_headline(btc):
+    if btc["price"] is None:
+        return "₿ ⚠"
+    return f"₿ {number(btc['price'])} {FORMATTERS['percent'](btc['change'])}"
+
+
 class PnlApp(rumps.App):
     def __init__(self, client):
         super().__init__("币安今日盈亏", title="₿ …", quit_button=None)
@@ -348,6 +357,9 @@ class PnlApp(rumps.App):
             if saved_minutes in REFRESH_MINUTES_OPTIONS
             else DEFAULT_REFRESH_MINUTES
         )
+        saved_mode = self.defaults.stringForKey_(TITLE_MODE_KEY)
+        self.title_mode = saved_mode if saved_mode in TITLE_MODES else "pnl"
+        self.titles = None
         self.timer = None
         self.start_timer()
 
@@ -374,6 +386,31 @@ class PnlApp(rumps.App):
             parent.add(item)
         return parent
 
+    def update_title(self):
+        if self.titles:
+            self.title = self.titles[self.title_mode]
+
+    def set_title_mode(self, mode):
+        # 只换顶部文字和勾选状态，不重建菜单，避免打断进行中的刷新
+        self.title_mode = mode
+        self.defaults.setObject_forKey_(mode, TITLE_MODE_KEY)
+        self.update_title()
+        self.title_parent.title = f"顶栏显示：{TITLE_MODES[mode]}"
+        for key, item in self.title_items.items():
+            item.state = int(key == mode)
+
+    def title_menu(self):
+        self.title_parent = rumps.MenuItem(f"顶栏显示：{TITLE_MODES[self.title_mode]}")
+        self.title_items = {}
+        for mode, label in TITLE_MODES.items():
+            item = rumps.MenuItem(
+                label, callback=lambda _, mode=mode: self.set_title_mode(mode)
+            )
+            item.state = int(mode == self.title_mode)
+            self.title_parent.add(item)
+            self.title_items[mode] = item
+        return self.title_parent
+
     def refresh(self, _=None):
         if self.loading:
             return
@@ -384,7 +421,12 @@ class PnlApp(rumps.App):
         try:
             warnings = []
             data, market = collect(self.client, datetime.now(UTC), warnings)
-            result = (*daily_breakdown(data, market), *overview(data, market), warnings)
+            result = (
+                *daily_breakdown(data, market),
+                *overview(data, market),
+                spot_row("BTC", ZERO, market),
+                warnings,
+            )
         except Exception as error:  # 后台线程异常若不兜住，菜单栏会永远停在加载中
             result = error
         callAfter(self.show, result)
@@ -395,6 +437,7 @@ class PnlApp(rumps.App):
         self._nsapp.nsstatusitem.setAutosaveName_("binance-pnl")
         self.menu.clear()
         if isinstance(result, Exception):
+            self.titles = None
             self.title = "₿ ⚠"
             items = [rumps.MenuItem(f"查询失败：{type(result).__name__}")]
         else:
@@ -402,13 +445,14 @@ class PnlApp(rumps.App):
         self.menu = [
             *items,
             rumps.separator,
+            self.title_menu(),
             self.frequency_menu(),
             rumps.MenuItem("立即刷新", callback=self.refresh, key="r"),
             rumps.MenuItem("退出", callback=rumps.quit_application, key="q"),
         ]
 
     def report_items(
-        self, spot, contract, funding, overview_rows, overview_summary, warnings
+        self, spot, contract, funding, overview_rows, overview_summary, btc, warnings
     ):
         detail_groups = (
             ("现货", spot, spot_summary(spot), SPOT_COLUMNS, "value"),
@@ -421,7 +465,8 @@ class PnlApp(rumps.App):
             ),
         )
         summaries = [summary for _, _, summary, _, _ in detail_groups]
-        self.title = headline(*summaries)
+        self.titles = dict(pnl=headline(*summaries), btc=btc_headline(btc))
+        self.update_title()
         overview_group = (
             "总览",
             overview_rows,
