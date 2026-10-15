@@ -335,7 +335,8 @@ class ReportTest(unittest.TestCase):
         rows, summary = overview(data, market)
         doge = next(row for row in rows if row["name"] == "DOGE")
         self.assertEqual(
-            (doge["quantity"], doge["value"]), (Decimal(150), Decimal(300))
+            (doge["quantity"], doge["price"], doge["value"]),
+            (Decimal(150), Decimal(2), Decimal(300)),
         )
         self.assertEqual(summary["value"], Decimal(450))
         self.assertEqual(doge["share"] * 3, Decimal(200))

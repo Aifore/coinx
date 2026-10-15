@@ -74,6 +74,7 @@ SPOT_COLUMNS = (
 OVERVIEW_COLUMNS = (
     ("币种", "name", "text"),
     ("数量", "quantity", "number"),
+    ("现价", "price", "number"),
     ("市值", "value", "money"),
     ("占比", "share", "share"),
 )
