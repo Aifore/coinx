@@ -8,6 +8,7 @@ from binance_report import (
     account_values,
     collect,
     contract_summary,
+    core_data_missing,
     daily_breakdown,
     overview,
     number,
@@ -364,6 +365,14 @@ class ReportTest(unittest.TestCase):
         self.assertEqual(market["BTC"], ticker)
         call.assert_any_call(
             "spot", "ticker-trading-day", symbol="BTCUSDT", time_zone="0:00"
+        )
+
+    def test_core_data_missing_only_when_all_core_endpoints_failed(self):
+        self.assertTrue(
+            core_data_missing(dict(spot=None, positions=None, usds=None, coin=1))
+        )
+        self.assertFalse(
+            core_data_missing(dict(spot=None, positions=[], usds=None, coin=None))
         )
 
     def test_contract_summary_roi_uses_total_margin(self):

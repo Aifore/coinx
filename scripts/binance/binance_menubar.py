@@ -48,6 +48,7 @@ from binance_report import (
     Binance,
     collect,
     contract_summary,
+    core_data_missing,
     daily_breakdown,
     overview,
     fmt,
@@ -353,11 +354,18 @@ def btc_headline(btc):
     return f"₿ {number(btc['price'])} {FORMATTERS['percent'](btc['change'])}"
 
 
+def failure_reason(error):
+    # 只有本脚本自己抛的 ValueError 保证不含签名等敏感信息，其余只显示类型
+    detail = str(error) if isinstance(error, ValueError) else type(error).__name__
+    return f"查询失败：{detail}"
+
+
 class PnlApp(rumps.App):
     def __init__(self, client):
         super().__init__("币安今日盈亏", title="₿ …", quit_button=None)
         self.client = client
         self.loading = False
+        self.last_report = None
         self.defaults = NSUserDefaults.standardUserDefaults()
         saved_minutes = self.defaults.integerForKey_(REFRESH_MINUTES_KEY)
         self.refresh_minutes = (
@@ -429,6 +437,10 @@ class PnlApp(rumps.App):
         try:
             warnings = []
             data, market = collect(self.client, datetime.now(UTC), warnings)
+            if core_data_missing(data):
+                raise ValueError(
+                    "现货与合约接口均无响应，请检查网络或 binance-cli 配置"
+                )
             result = (
                 *daily_breakdown(data, market),
                 *overview(data, market),
@@ -444,12 +456,15 @@ class PnlApp(rumps.App):
         # 有保存名系统才会记住 ⌘ 拖动后的图标位置；状态栏图标在 run() 之后才创建
         self._nsapp.nsstatusitem.setAutosaveName_("binance-pnl")
         self.menu.clear()
-        if isinstance(result, Exception):
+        if not isinstance(result, Exception):
+            self.last_report = (result, datetime.now())
+            items = self.report_items(*result, updated_at=self.last_report[1])
+        elif self.last_report is None:
             self.titles = None
             self.title = "₿ ⚠"
-            items = [rumps.MenuItem(f"查询失败：{type(result).__name__}")]
+            items = [rumps.MenuItem(failure_reason(result))]
         else:
-            items = self.report_items(*result)
+            items = self.stale_items(result)
         self.menu = [
             *items,
             rumps.separator,
@@ -459,8 +474,35 @@ class PnlApp(rumps.App):
             rumps.MenuItem("退出", callback=rumps.quit_application, key="q"),
         ]
 
+    def stale_items(self, error):
+        # 网络抖动时保留上次成功的数据，只提示它是旧的，不让整个菜单变空
+        report, updated_at = self.last_report
+        minutes = int((datetime.now() - updated_at).total_seconds() // 60)
+        age = f"{minutes} 分钟前" if minutes else "不到 1 分钟前"
+        items = self.report_items(*report, updated_at=updated_at)
+        # 两种顶栏文字都加 ⚠，切换显示内容后提示不丢
+        self.titles = {
+            mode: title if title.endswith("⚠") else f"{title} ⚠"
+            for mode, title in self.titles.items()
+        }
+        self.update_title()
+        return [
+            rumps.MenuItem(f"本次查询失败，以下为 {age}的数据"),
+            rumps.MenuItem(failure_reason(error)),
+            rumps.separator,
+            *items,
+        ]
+
     def report_items(
-        self, spot, contract, funding, overview_rows, overview_summary, btc, warnings
+        self,
+        spot,
+        contract,
+        funding,
+        overview_rows,
+        overview_summary,
+        btc,
+        warnings,
+        updated_at,
     ):
         detail_groups = (
             ("现货", spot, spot_summary(spot), SPOT_COLUMNS, "value"),
@@ -489,7 +531,7 @@ class PnlApp(rumps.App):
         items = [
             *parents,
             rumps.separator,
-            rumps.MenuItem(f"更新于 {datetime.now():%H:%M:%S}（UTC 0 点起算）"),
+            rumps.MenuItem(f"更新于 {updated_at:%H:%M:%S}（UTC 0 点起算）"),
         ]
         if warnings:
             gaps = rumps.MenuItem(f"数据缺口 {len(warnings)} 项")
